@@ -5,7 +5,19 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    const boxes = [];
+    const numBoxes = 24;
+    for (let i = 0; i < numBoxes; i++) {
+      boxes.push({
+        id: i,
+        color: `rgb(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()})`,
+      });
+    }
+
     // set default state
+    this.state = { 
+      boxes: boxes, 
+    };
 
     // bind methods to this
   }
