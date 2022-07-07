@@ -11,6 +11,9 @@ const Box = (props) => {
         display: "inline-block",
       }}
     >
+      onclick={ function(event){
+
+      }}
       <span>{/* Add rgb value from props */}</span>
     </div>
   );
