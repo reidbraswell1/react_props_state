@@ -49,6 +49,7 @@ class App extends Component {
           textAlign: "center",
         }}
       >
+        <h2>test</h2>,
         <h1>React: State and Props</h1>
         <div className="App">{/* render boxes */}</div>
       </main>
