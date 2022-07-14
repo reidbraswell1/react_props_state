@@ -8,10 +8,10 @@ class App extends Component {
 
     // Set the initial state of the component
     // Boxes will contain an array of objects composed of an id and rgb color
-    const boxes = [];
+    const BOXES = [];
     const numBoxes = 24;
     for (let i = 0; i < numBoxes; i++) {
-      boxes.push({
+      BOXES.push({
         id: i,
         color: `rgb(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()})`,
       });
@@ -19,7 +19,7 @@ class App extends Component {
 
     // set default state
     this.state = { 
-      boxes: boxes, 
+      boxes: BOXES,
     };
 
     // bind methods to this
@@ -32,14 +32,11 @@ class App extends Component {
   }
 
   handleBoxClick(event) {
-    let newBoxes;
-    boxes.map(function(value, index, array) {
+    this.state.boxes.map(function(value, index, array) {
       if(value === event.id) {
         return
       }
     });
-    boxes
-
   }
 
   render() {
