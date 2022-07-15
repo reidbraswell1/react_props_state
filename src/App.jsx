@@ -4,6 +4,7 @@ import Box from "./components/Box.jsx"
 
 class App extends Component {
   constructor(props) {
+    console.log(`---Begin App constructor---`);
     super(props);
 
     // Set the initial state of the component
@@ -21,13 +22,16 @@ class App extends Component {
     this.state = { 
       boxes: BOXES,
     };
+    console.log(`---End App constructor---`);
 
     // bind methods to this
   }
 
   getRandomColor() {
+    console.log(`---Begin Function getRandomColor()---`);
     let randomRGBColor = Math.floor(Math.random()* 256);
     console.log(`randomRGBColor = ${randomRGBColor}`);
+    console.log(`---End Function getRandomColor()---`);
     return randomRGBColor;
   }
 
@@ -40,6 +44,8 @@ class App extends Component {
   }
 
   render() {
+    let paragraphText;
+    this.state.boxes.map(function(value, index, array){paragraphText+=`Id: ${value.id} <br>`});
     return (
       <main
         style={{
@@ -50,6 +56,9 @@ class App extends Component {
         }}
       >
         <h2>test</h2>,
+        <p>
+  {`Id = ${this.state.boxes[1].id}, RGBColor = ${this.state.boxes[1].color}`}</p>,
+        <p>{paragraphText}</p>,
         <h1>React: State and Props</h1>
         <div className="App">{/* render boxes */}</div>
       </main>
