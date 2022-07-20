@@ -18,7 +18,7 @@ class App extends Component {
       let hexColor = `#${this.convertToHex(rgbRed)}${this.convertToHex(rgbGreen)}${this.convertToHex(rgbBlue)}`;
       BOXES.push({
         id: i,
-        color: `rgb(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()})`,
+        color: `rgba(${rgbRed}, ${rgbGreen}, ${rgbBlue}, .3)`,
         hexColor: hexColor,
       });
     }
@@ -46,8 +46,8 @@ class App extends Component {
     if (isNaN(hex)) {
       hex = 0;
     }
+    let base16 = hex.toString(16).toUpperCase();
     console.log(`---End Function convertToHex()---`);
-    let base16 = hex.toString(16);
     // Proceed the number with a 0 if the length is less than 2
     return (base16.length < 2 ? `0${base16}`: base16);
   }
@@ -64,28 +64,22 @@ class App extends Component {
     let paragraphText;
     return (
       <main
-        className="App.css"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          textAlign: "center",
-        }}
+        id={"main"}
       >
-        <h2>test</h2>,
-        <table id={"colorTable"} style={{width: "60%"}}>
+        <h1>React: State and Props</h1>
+        <table id={"colorTable"}>
           <tr>
             <th>ID</th>
-            <th>COLOR</th>
+            <th>RGB COLOR</th>
             <th>HEX COLOR</th>
             <th>DISPLAYED COLOR</th>
           </tr>
           {this.state.boxes.map(function (value, index, array) {
-          return <tr><td>{value.id}</td><td style={{textAlign: "left"}}>{value.color}</td><td style={{textAlign: "left"}}>{value.hexColor}</td><td style={{textAlign: "left", backgroundColor: value.hexColor}}></td></tr>})};
-        </table>,
-        <p>{paragraphText}</p>,
+          return <tr><td>{value.id}</td><td>{value.color}</td><td>{value.hexColor}</td><td style={{backgroundColor: value.hexColor}}></td></tr>})};
+        </table>
+        <p>{paragraphText}</p>
         <h1>React: State and Props</h1>
-        <div className="App">{/* render boxes */}</div>
+        <div className="App">{this.state.boxes.map((value, index, array) => { return Box(value) })}</div>
       </main>
     );
   }
