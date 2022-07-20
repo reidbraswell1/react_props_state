@@ -12,9 +12,14 @@ class App extends Component {
     const BOXES = [];
     const numBoxes = 24;
     for (let i = 0; i < numBoxes; i++) {
+      let rgbRed = this.getRandomColor();
+      let rgbGreen = this.getRandomColor();
+      let rgbBlue = this.getRandomColor();
+      let hexColor = `#${this.convertToHex(rgbRed)}${this.convertToHex(rgbGreen)}${this.convertToHex(rgbBlue)}`;
       BOXES.push({
         id: i,
         color: `rgb(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()})`,
+        hexColor: hexColor,
       });
     }
 
@@ -35,6 +40,18 @@ class App extends Component {
     return randomRGBColor;
   }
 
+  convertToHex(color) {
+    console.log(`---Begin Function convertToHex()---`);
+    let hex = parseInt(color);
+    if (isNaN(hex)) {
+      hex = 0;
+    }
+    console.log(`---End Function convertToHex()---`);
+    let base16 = hex.toString(16);
+    // Proceed the number with a 0 if the length is less than 2
+    return (base16.length < 2 ? `0${base16}`: base16);
+  }
+
   handleBoxClick(event) {
     this.state.boxes.map(function(value, index, array) {
       if(value === event.id) {
@@ -45,9 +62,9 @@ class App extends Component {
 
   render() {
     let paragraphText;
-    this.state.boxes.map(function(value, index, array){paragraphText+=`Id: ${value.id} <br>`});
     return (
       <main
+        className="App.css"
         style={{
           display: "flex",
           justifyContent: "center",
@@ -56,8 +73,16 @@ class App extends Component {
         }}
       >
         <h2>test</h2>,
-        <p>
-  {`Id = ${this.state.boxes[1].id}, RGBColor = ${this.state.boxes[1].color}`}</p>,
+        <table id={"colorTable"} style={{width: "60%"}}>
+          <tr>
+            <th>ID</th>
+            <th>COLOR</th>
+            <th>HEX COLOR</th>
+            <th>DISPLAYED COLOR</th>
+          </tr>
+          {this.state.boxes.map(function (value, index, array) {
+          return <tr><td>{value.id}</td><td style={{textAlign: "left"}}>{value.color}</td><td style={{textAlign: "left"}}>{value.hexColor}</td><td style={{textAlign: "left", backgroundColor: value.hexColor}}></td></tr>})};
+        </table>,
         <p>{paragraphText}</p>,
         <h1>React: State and Props</h1>
         <div className="App">{/* render boxes */}</div>
