@@ -1,4 +1,4 @@
-import "./App.css";
+import "./css/App.css";
 import { Component } from "react";
 import Box from "./components/Box.jsx"
 
