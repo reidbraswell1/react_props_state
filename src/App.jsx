@@ -29,7 +29,7 @@ class App extends Component {
     };
     console.log(`---End App constructor---`);
 
-    // bind methods to this
+    /*this.handleBoxClick = this.handleBoxClick.bind(this);*/
   }
 
   getRandomColor() {
@@ -55,7 +55,8 @@ class App extends Component {
   handleBoxClick(event) {
     this.state.boxes.map(function(value, index, array) {
       if(value === event.id) {
-        return
+        console.log(`Event - ${event.id}`);
+        return event.id
       }
     });
   }
@@ -66,7 +67,7 @@ class App extends Component {
       <main
         id={"main"}
       >
-        <h1>React: State and Props</h1>
+        <h1>React: State and Props Table Form</h1>
         <table id={"colorTable"}>
           <tr>
             <th>ID</th>
@@ -78,8 +79,16 @@ class App extends Component {
           return <tr><td>{value.id}</td><td>{value.color}</td><td>{value.hexColor}</td><td style={{backgroundColor: value.hexColor}}></td></tr>})};
         </table>
         <p>{paragraphText}</p>
-        <h1>React: State and Props</h1>
-        <div className="App">{this.state.boxes.map((value, index, array) => { return Box(value) })}</div>
+        <h1>React: State and Props Box Form</h1>
+        <div className="App">
+          
+          { this.state.boxes.map((value, index, array) => 
+            { 
+              console.log(`key=${value.id}, id=${value.id}, color=${value.color}`)
+              return <Box key={value.id} id={value.id} color={value.color}/> 
+            })
+          }
+        </div>
       </main>
     );
   }
