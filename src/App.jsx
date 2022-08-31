@@ -53,12 +53,15 @@ class App extends Component {
   }
 
   handleBoxClick(event) {
-    this.state.boxes.map(function(value, index, array) {
-      if(value === event.id) {
-        console.log(`Event - ${event.id}`);
-        return event.id
+    console.log("here");
+    let updatedBoxes = this.state.boxes.map(function(value, index, array) {
+      if(value == event.target.id) {
+        console.log(`Event - ${event.target.id}`);
+        value.color = `rgba(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()}, .3)`;
+        return value;
       }
     });
+    this.setState({boxes:updatedBoxes});
   }
 
   render() {
@@ -85,7 +88,10 @@ class App extends Component {
           { this.state.boxes.map((value, index, array) => 
             { 
               console.log(`key=${value.id}, id=${value.id}, color=${value.color}`)
-              return <Box key={value.id} id={value.id} color={value.color}/> 
+              return <Box key={value.id} 
+                          id={value.id} 
+                          color={value.color}
+                          onClicked={this.handleBoxClick}/> 
             })
           }
         </div>
