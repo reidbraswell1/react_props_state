@@ -54,7 +54,7 @@ class App extends Component {
 
   handleBoxClick(event) {
     console.log("here");
-    let updatedBoxes = this.state.boxes.map(function(value, index, array) {
+    let updatedBoxes = this.state.boxes.map((value, index, array) => {
       if(value == event.target.id) {
         console.log(`Event - ${event.target.id}`);
         value.color = `rgba(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()}, .3)`;
