@@ -24,9 +24,27 @@ class App extends Component {
       });
     }
 
+    // Set the initial state of the component
+    // Boxes will contain an array of objects composed of an id and rgb color
+    const TABLE_ROWS = [];
+    const numTableRows = 24;
+    for (let i = 0; i < numTableRows; i++) {
+      let rgbRed = this.getRandomColor();
+      let rgbGreen = this.getRandomColor();
+      let rgbBlue = this.getRandomColor();
+      let hexColor = `#${this.convertToHex(rgbRed)}${this.convertToHex(rgbGreen)}${this.convertToHex(rgbBlue)}`;
+      TABLE_ROWS.push({
+        id: i,
+        color: `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`,
+        hexColor: hexColor,
+      });
+    }
+
+
     // set default state
     this.state = { 
       boxes: BOXES,
+      tableRows: TABLE_ROWS,
     };
     console.log(`---End App constructor---`);
 
@@ -34,6 +52,7 @@ class App extends Component {
     this.handleTableClick = this.handleTableClick.bind(this);
   }
 
+  // Get a random color between 0 and 255
   getRandomColor() {
     console.log(`---Begin Function getRandomColor()---`);
     let randomRGBColor = Math.floor(Math.random()* 256);
@@ -42,6 +61,7 @@ class App extends Component {
     return randomRGBColor;
   }
 
+  // Convert a color number to hexadecimal notation
   convertToHex(color) {
     console.log(`---Begin Function convertToHex()---`);
     let hex = parseInt(color);
@@ -54,10 +74,13 @@ class App extends Component {
     return (base16.length < 2 ? `0${base16}`: base16);
   }
 
+  // Event handler. Handle event when user clicks on a box
   handleBoxClick(event) {
-    console.log("here");
+    console.log(`---Begin Function handleBoxClick()---`);
     let updatedBoxes = this.state.boxes.map((value, index, array) => {
-      if(value.id == event.target.id) {
+      let boxId = `Box:${value.id}`;
+      let eventId = event.target.id;
+      if(boxId == eventId) {
         console.log(`EventId = ${event.target.id}, BoxId=${value.id}`);
         value.color = `rgba(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()}, .3)`;
         console.log(`Color=${value.color}`);
@@ -65,30 +88,36 @@ class App extends Component {
       return value;
     });
     this.setState({boxes:updatedBoxes});
+    console.log(`---End Function handleBoxClick()---`);
   }
   
+  // Event handler. Handle event when user clicks on a table row
   handleTableClick(event) {
-    console.log(`--- Begin handleTableClick()--- `);
-    let updatedBoxes = this.state.boxes.map((value, index, array) => {
+    console.log(`---Begin handleTableClick()---`);
+    let updatedTableRows = this.state.tableRows.map((value, index, array) => {
       let tableId = `Table:${value.id}`;
       let eventId = event.target.id;
       if(tableId == eventId) {
         console.log(`EventId = ${eventId}, TableId=${tableId}`);
-        value.color = `rgba(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()}, .3)`;
+        let red = this.getRandomColor();
+        let blue = this.getRandomColor();
+        let green = this.getRandomColor();
+        let hexColor = `#${this.convertToHex(red)}${this.convertToHex(blue)}${this.convertToHex(green)}`;
+        value.color = `rgb(${red}, ${blue}, ${green})`;
+        value.hexColor = hexColor;
         console.log(`Color=${value.color}`);
       }
       return value;
     });
-    this.setState({boxes:updatedBoxes});
+    this.setState({tableRows:updatedTableRows});
+    console.log(`---End handleTableClick()---`);
   }
 
   render() {
-    let paragraphText;
     return (
-      <main
-        id={"main"}
-      >
+      <main id={"main"}>
         <h1>React: State and Props Table Form</h1>
+        <h2>Click on a row under the 4th column "Displayed Color" to change it's color!</h2>
         <table id={"colorTable"}>
           <thead>
             <tr>
@@ -99,27 +128,27 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-          {this.state.boxes.map((value, index, array) => {
-            console.log(`Id=${value.id}`);
-            let tableDataId = `Table:${value.id}`;
-            return <Table id={value.id} 
-                          color={value.color} 
-                          hexColor={value.hexColor} 
-                          tableId={tableDataId}
-                          onClicked={this.handleTableClick}>
-                  </Table> 
-          })};
+            { this.state.tableRows.map((value, index, array) => {
+              console.log(`Id=${value.id}`);
+              let tableDataId = `Table:${value.id}`;
+              return <Table id={tableDataId} 
+                            color={value.color} 
+                            hexColor={value.hexColor} 
+                            tableId={tableDataId}
+                            onClicked={this.handleTableClick}>
+                    </Table> 
+            })};
           </tbody>
         </table>
-        <p>{paragraphText}</p>
         <h1>React: State and Props Box Form</h1>
+        <h2>Click on an individual box to change it's color!</h2>
         <div className="App">
-          
           { this.state.boxes.map((value, index, array) => 
             { 
               console.log(`key=${value.id}, id=${value.id}, color=${value.color}`)
-              return <Box key={value.id} 
-                          id={value.id} 
+              let boxDataId = `Box:${value.id}`;
+              return <Box key={boxDataId} 
+                          id={boxDataId} 
                           color={value.color}
                           onClicked={this.handleBoxClick}/> 
             })
