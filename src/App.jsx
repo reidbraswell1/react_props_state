@@ -31,7 +31,7 @@ class App extends Component {
     console.log(`---End App constructor---`);
 
     this.handleBoxClick = this.handleBoxClick.bind(this);
-    this.handleBoxClick = this.handleTableClick.bind(this);
+    this.handleTableClick = this.handleTableClick.bind(this);
   }
 
   getRandomColor() {
@@ -71,7 +71,7 @@ class App extends Component {
     console.log(`--- Begin handleTableClick()--- `);
     let updatedBoxes = this.state.boxes.map((value, index, array) => {
       let tableId = `Table:${value.id}`;
-      let eventId = `Table:${event.target.id}`;
+      let eventId = event.target.id;
       if(tableId == eventId) {
         console.log(`EventId = ${eventId}, TableId=${tableId}`);
         value.color = `rgba(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()}, .3)`;
