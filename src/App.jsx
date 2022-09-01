@@ -1,6 +1,7 @@
 import "./css/App.css";
 import { Component } from "react";
 import Box from "./components/Box.jsx"
+import Table from "./components/Table.jsx"
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class App extends Component {
     };
     console.log(`---End App constructor---`);
 
-    /*this.handleBoxClick = this.handleBoxClick.bind(this);*/
+    this.handleBoxClick = this.handleBoxClick.bind(this);
   }
 
   getRandomColor() {
@@ -55,11 +56,12 @@ class App extends Component {
   handleBoxClick(event) {
     console.log("here");
     let updatedBoxes = this.state.boxes.map((value, index, array) => {
-      if(value == event.target.id) {
-        console.log(`Event - ${event.target.id}`);
+      if(value.id == event.target.id) {
+        console.log(`EventId = ${event.target.id}, BoxId=${value.id}`);
         value.color = `rgba(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()}, .3)`;
-        return value;
+        console.log(`Color=${value.color}`);
       }
+      return value;
     });
     this.setState({boxes:updatedBoxes});
   }
@@ -72,14 +74,22 @@ class App extends Component {
       >
         <h1>React: State and Props Table Form</h1>
         <table id={"colorTable"}>
-          <tr>
-            <th>ID</th>
-            <th>RGB COLOR</th>
-            <th>HEX COLOR</th>
-            <th>DISPLAYED COLOR</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>RGB COLOR</th>
+              <th>HEX COLOR</th>
+              <th>DISPLAYED COLOR</th>
+            </tr>
+          </thead>
+          <tbody>
           {this.state.boxes.map(function (value, index, array) {
-          return <tr><td>{value.id}</td><td>{value.color}</td><td>{value.hexColor}</td><td style={{backgroundColor: value.hexColor}}></td></tr>})};
+            console.log(`Id=${value.id}`);
+            let tableDataId = `Table:${value.id}`;
+            return <Table id={value.id} color={value.color} hexColor={value.hexColor} tableId={tableDataId}>
+                  </Table> 
+          })};
+          </tbody>
         </table>
         <p>{paragraphText}</p>
         <h1>React: State and Props Box Form</h1>
