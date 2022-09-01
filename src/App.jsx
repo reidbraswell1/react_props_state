@@ -31,6 +31,7 @@ class App extends Component {
     console.log(`---End App constructor---`);
 
     this.handleBoxClick = this.handleBoxClick.bind(this);
+    this.handleBoxClick = this.handleTableClick.bind(this);
   }
 
   getRandomColor() {
@@ -65,6 +66,21 @@ class App extends Component {
     });
     this.setState({boxes:updatedBoxes});
   }
+  
+  handleTableClick(event) {
+    console.log(`--- Begin handleTableClick()--- `);
+    let updatedBoxes = this.state.boxes.map((value, index, array) => {
+      let tableId = `Table:${value.id}`;
+      let eventId = `Table:${event.target.id}`;
+      if(tableId == eventId) {
+        console.log(`EventId = ${eventId}, TableId=${tableId}`);
+        value.color = `rgba(${this.getRandomColor()}, ${this.getRandomColor()}, ${this.getRandomColor()}, .3)`;
+        console.log(`Color=${value.color}`);
+      }
+      return value;
+    });
+    this.setState({boxes:updatedBoxes});
+  }
 
   render() {
     let paragraphText;
@@ -83,10 +99,14 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-          {this.state.boxes.map(function (value, index, array) {
+          {this.state.boxes.map((value, index, array) => {
             console.log(`Id=${value.id}`);
             let tableDataId = `Table:${value.id}`;
-            return <Table id={value.id} color={value.color} hexColor={value.hexColor} tableId={tableDataId}>
+            return <Table id={value.id} 
+                          color={value.color} 
+                          hexColor={value.hexColor} 
+                          tableId={tableDataId}
+                          onClicked={this.handleTableClick}>
                   </Table> 
           })};
           </tbody>
