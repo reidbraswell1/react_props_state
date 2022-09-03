@@ -1,5 +1,7 @@
 # React: State and Props
 
+![React State and Props](/ReactStateAndProps-Boxes.png?raw=true "React State and Props - Boxes")
+
 Template for React exercises
 
 ## Getting Started
@@ -50,3 +52,7 @@ Template for React exercises
 4. Lastly, add a `backgroundColor` property to the inline-styling of the return div, and assign it `prop.color`
 
 - Your finished product should display 24 squares on the DOM, all with random color values. Each square's background color should randomize when you click on it.
+
+__Additional features added.__
+   - Styling
+   - Table form of boxes with clickable table cells.
